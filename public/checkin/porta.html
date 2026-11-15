@@ -1,0 +1,740 @@
+<title>Porta Capodanno 2027</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<style>
+/* Layout: app a due schede (Lista / Porta) con barra in basso su telefono; stesso mondo ink + oro della landing. Look scuro unico, voluto. */
+:root{
+  color-scheme:dark;
+  --ink-950:#0B0F19; --ink-900:#111727; --ink-800:#1a2236; --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.18);
+  --fg:#eef1f7; --muted:#8c96ab; --dim:#5b6479;
+  --gold-100:#f4e6c4; --gold-200:#ecd29b; --gold-300:#e2b866; --gold-600:#8f6620;
+  --ok:#3ddc97; --ok-bg:#0f3a2a; --warn:#ffb648; --warn-bg:#3d2a0c; --bad:#ff5d6c; --bad-bg:#40121a;
+  --display:"Instrument Serif",Georgia,serif; --sans:"Plus Jakarta Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--ink-950);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--ink-950)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--gold-300);outline-offset:2px}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--mono)} .tab{font-variant-numeric:tabular-nums}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-300)}
+
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(11,15,25,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+.brand{display:flex;align-items:baseline;gap:8px}
+.brand b{font-family:var(--display);font-weight:400;font-size:26px;line-height:1}
+.brand span{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--gold-300)}
+.mode{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:4px 8px;border-radius:99px;border:1px solid var(--line-2);color:var(--muted)}
+.mode.live{border-color:rgba(61,220,151,.4);color:var(--ok)}
+.tabs{display:flex;gap:4px;background:var(--ink-900);border:1px solid var(--line);border-radius:99px;padding:4px}
+.tabs button{border:0;background:none;padding:8px 16px;border-radius:99px;font-weight:600;font-size:14px;color:var(--muted)}
+.tabs button[aria-selected="true"]{background:var(--gold-300);color:var(--ink-950)}
+nav.bottom{display:none}
+@media (max-width:640px){
+  .tabs.desk{display:none}
+  nav.bottom{display:flex}
+  main{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+}
+nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:20;gap:8px;background:rgba(11,15,25,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+nav.bottom button{flex:1;border:1px solid var(--line);background:var(--ink-900);border-radius:16px;padding:12px;font-weight:600;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:8px}
+nav.bottom button[aria-selected="true"]{background:var(--gold-300);border-color:var(--gold-300);color:var(--ink-950)}
+
+main{padding-block:20px 40px}
+.notice{border:1px dashed var(--line-2);border-radius:14px;padding:12px 14px;color:var(--muted);font-size:13px;margin-bottom:16px}
+.notice b{color:var(--gold-200);font-weight:600}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-block:1px solid var(--line);margin-bottom:22px}
+.stats div{padding:14px 6px;text-align:center}
+.stats div+div{border-left:1px solid var(--line)}
+.stats .n{font-family:var(--mono);font-size:26px;font-weight:500;font-variant-numeric:tabular-nums}
+.stats .l{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-top:2px}
+.stats .n.gold{color:var(--gold-200)}
+@media (max-width:420px){.stats .n{font-size:21px}}
+
+/* toolbar */
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
+.search{flex:1 1 200px;min-width:0;background:var(--ink-900);border:1px solid var(--line);border-radius:12px;padding:11px 14px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:none;border-radius:99px;padding:7px 12px;font-size:13px;color:var(--muted)}
+.chip[aria-pressed="true"]{border-color:var(--gold-300);color:var(--gold-200)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:99px;border:0;background:var(--gold-300);color:var(--ink-950);font-weight:700;padding:11px 18px;font-size:14px;transition:transform .1s,background .15s}
+.btn:hover{background:var(--gold-200)} .btn:active{transform:scale(.97)}
+.btn.line{background:none;border:1px solid var(--line-2);color:var(--fg);font-weight:600}
+.btn.line:hover{border-color:var(--gold-300)}
+.btn.ok{background:var(--ok);color:#04150d}
+.btn.sm{padding:7px 12px;font-size:13px}
+.btn.ghost{background:none;color:var(--muted);padding:7px 10px;font-weight:500}
+.btn[disabled]{opacity:.5;pointer-events:none}
+
+/* bookings */
+.list{display:flex;flex-direction:column;gap:10px}
+.bk{background:var(--ink-900);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.bk-h{display:grid;grid-template-columns:1fr auto;gap:6px 12px;padding:14px 16px;align-items:start;width:100%;text-align:left;background:none;border:0}
+.bk-who{min-width:0}
+.bk-names{font-weight:600;font-size:16px;overflow-wrap:anywhere}
+.bk-meta{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:3px;overflow-wrap:anywhere}
+.bk-right{text-align:right}
+.amt{font-family:var(--mono);font-size:17px;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:99px;margin-top:4px;white-space:nowrap}
+.pill.pending{background:var(--warn-bg);color:var(--warn)}
+.pill.paid{background:var(--ok-bg);color:var(--ok)}
+.pill.ex{background:var(--ink-800);color:var(--muted);margin-left:4px}
+.bk-b{border-top:1px solid var(--line);padding:14px 16px;display:flex;flex-direction:column;gap:14px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:13px}
+.kv dt{color:var(--dim);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding-top:2px}
+.kv dd{margin:0;overflow-wrap:anywhere}
+.causale{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.causale code{font-family:var(--mono);background:var(--ink-800);padding:3px 8px;border-radius:6px;font-size:12px}
+.tix{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.tk{background:var(--gold-100);color:var(--ink-950);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:6px;align-items:stretch}
+.tk img{width:100%;border-radius:8px;display:block;background:#fff}
+.tk .nm{font-weight:700;font-size:13px;line-height:1.2}
+.tk .id{font-family:var(--mono);font-size:11px;opacity:.7}
+.tk .in{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#0a6b45}
+.tk button{border:1px solid rgba(11,15,25,.25);background:none;border-radius:99px;padding:6px;font-size:12px;font-weight:600}
+.tk.locked{background:var(--ink-800);color:var(--muted);align-items:center;justify-content:center;text-align:center;min-height:120px;font-size:12px}
+.row-actions{display:flex;flex-wrap:wrap;gap:8px}
+.empty{text-align:center;padding:40px 16px;border:1px dashed var(--line-2);border-radius:18px;color:var(--muted)}
+.empty h3{font-family:var(--display);font-weight:400;font-size:30px;color:var(--fg);margin:0 0 6px}
+
+/* sheet */
+.sheet-bg{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--ink-900);border:1px solid var(--line-2);border-bottom:0;border-radius:24px 24px 0 0;width:100%;max-width:560px;max-height:92%;overflow:auto;padding:20px max(18px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px))}
+@media (min-width:641px){.sheet-bg{align-items:center}.sheet{border-radius:24px;border-bottom:1px solid var(--line-2)}}
+.sheet h2{font-family:var(--display);font-weight:400;font-size:32px;margin:4px 0 14px}
+.fld{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.fld label{font-size:12px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.fld input,.fld select,.fld textarea{background:var(--ink-950);border:1px solid var(--line-2);border-radius:12px;padding:12px 14px;width:100%}
+.fld textarea{min-height:110px;resize:vertical}
+.fld small{color:var(--dim);font-size:12px}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg button{border:1px solid var(--line-2);background:var(--ink-950);border-radius:12px;padding:10px;text-align:left}
+.seg button[aria-pressed="true"]{border-color:var(--gold-300);background:rgba(226,184,102,.08)}
+.seg b{display:block;font-family:var(--mono);font-size:18px}
+.seg span{font-size:12px;color:var(--muted)}
+.sheet .foot{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:6px}
+.err{color:var(--bad);font-size:13px;min-height:1em}
+
+/* door */
+.door{display:flex;flex-direction:column;gap:16px}
+.door-head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap}
+.door-head h1{font-family:var(--display);font-weight:400;font-size:44px;line-height:1;margin:6px 0 0}
+.door-head h1 i{color:var(--gold-300)}
+.meter{flex:1 1 200px;max-width:320px}
+.meter .t{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:6px}
+.meter .t b{color:var(--fg);font-size:20px;font-weight:500}
+.meter .track{height:6px;background:var(--ink-800);border-radius:99px;overflow:hidden}
+.meter .fill{height:100%;background:linear-gradient(90deg,var(--gold-600),var(--gold-300));border-radius:99px;transition:width .4s}
+.viewer{position:relative;aspect-ratio:1/1;max-width:100%;width:min(100%,460px);margin:0 auto;border-radius:28px;overflow:hidden;background:radial-gradient(120% 90% at 50% 0%,#1d2640 0%,var(--ink-900) 60%);border:1px solid var(--line-2)}
+.viewer video{width:100%;height:100%;object-fit:cover;display:block}
+.reticle{position:absolute;inset:16%;pointer-events:none}
+.reticle i{position:absolute;width:36px;height:36px;border:3px solid var(--gold-300)}
+.reticle i:nth-child(1){top:0;left:0;border-right:0;border-bottom:0;border-top-left-radius:14px}
+.reticle i:nth-child(2){top:0;right:0;border-left:0;border-bottom:0;border-top-right-radius:14px}
+.reticle i:nth-child(3){bottom:0;left:0;border-right:0;border-top:0;border-bottom-left-radius:14px}
+.reticle i:nth-child(4){bottom:0;right:0;border-left:0;border-top:0;border-bottom-right-radius:14px}
+.scanline{position:absolute;left:18%;right:18%;height:2px;background:linear-gradient(90deg,transparent,var(--gold-200),transparent);box-shadow:0 0 18px var(--gold-300);top:20%;animation:sweep 2.2s ease-in-out infinite alternate}
+@keyframes sweep{to{top:78%}}
+@media (prefers-reduced-motion:reduce){.scanline{animation:none;top:50%}}
+.idle{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center}
+.idle p{margin:0;color:var(--muted);font-size:13px;max-width:30ch}
+.shoot{position:relative;display:inline-flex;align-items:center;gap:10px;background:var(--gold-300);color:var(--ink-950);font-weight:700;border-radius:99px;padding:16px 26px;font-size:16px;cursor:pointer}
+.shoot input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}
+.door-tools{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.manual{display:flex;gap:8px;max-width:460px;width:100%;margin:0 auto}
+.manual input{flex:1;min-width:0;background:var(--ink-900);border:1px solid var(--line-2);border-radius:12px;padding:12px 14px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em}
+
+/* verdict */
+.verdict{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:calc(24px + env(safe-area-inset-top,0px)) max(24px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(24px,env(safe-area-inset-left,0px));animation:pop .22s ease-out}
+@keyframes pop{from{opacity:0;transform:scale(1.04)}}
+.verdict.ok{background:radial-gradient(100% 70% at 50% 40%,#16624a 0%,#062218 100%);color:#eafff5}
+.verdict.used{background:radial-gradient(100% 70% at 50% 40%,#6b4710 0%,#221405 100%);color:#fff4e0}
+.verdict.bad{background:radial-gradient(100% 70% at 50% 40%,#7a1c28 0%,#22060b 100%);color:#ffecef}
+.verdict .big{font-family:var(--display);font-size:clamp(56px,16vw,120px);line-height:.9}
+.verdict .who{font-size:clamp(26px,7vw,44px);font-weight:700;line-height:1.1;text-wrap:balance}
+.verdict .sub{font-family:var(--mono);font-size:13px;letter-spacing:.08em;opacity:.85}
+.verdict .acts{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;justify-content:center}
+.verdict .acts button{border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.08);color:inherit;border-radius:99px;padding:14px 22px;font-weight:700}
+.verdict .acts button.primary{background:#fff;color:#0b0f19;border-color:#fff}
+
+.log{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.log div{display:grid;grid-template-columns:56px 1fr auto;gap:10px;padding:10px 2px;border-bottom:1px solid var(--line);font-size:14px;align-items:center}
+.log .t{font-family:var(--mono);color:var(--dim);font-size:12px}
+.log .s{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.s.ok{color:var(--ok)} .s.used{color:var(--warn)} .s.bad{color:var(--bad)}
+.toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:60;background:var(--fg);color:var(--ink-950);padding:10px 16px;border-radius:99px;font-weight:600;font-size:14px;max-width:calc(100% - 32px)}
+h2.sec{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);font-weight:500;margin:10px 0 4px}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><b>Porta</b><span>CAPODANNO 2027</span></div>
+    <div class="tabs desk" role="tablist">
+      <button role="tab" data-tab="lista" aria-selected="true">Lista</button>
+      <button role="tab" data-tab="porta" aria-selected="false">Porta</button>
+    </div>
+    <span class="mode" id="mode">…</span>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="notice"></div>
+
+  <section id="v-lista">
+    <div class="stats" id="stats"></div>
+    <div class="bar">
+      <input class="search" id="q" type="search" placeholder="Cerca nome, Instagram o codice" aria-label="Cerca">
+      <button class="btn" id="add">+ Prenotazione</button>
+    </div>
+    <div class="bar" style="justify-content:space-between">
+      <div class="chips" id="filters">
+        <button class="chip" data-f="all" aria-pressed="true">Tutte</button>
+        <button class="chip" data-f="pending_payment" aria-pressed="false">Attesa bonifico</button>
+        <button class="chip" data-f="paid" aria-pressed="false">Pagate</button>
+      </div>
+      <div class="chips">
+        <button class="btn ghost sm" id="import">Incolla dal sito</button>
+        <button class="btn ghost sm" id="export">Esporta CSV</button>
+      </div>
+    </div>
+    <div class="list" id="list"></div>
+  </section>
+
+  <section id="v-porta" hidden>
+    <div class="door">
+      <div class="door-head">
+        <div><div class="eyebrow">Ingresso dalle 21:00</div><h1>Chi <i>entra?</i></h1></div>
+        <div class="meter"><div class="t"><span>Dentro</span><span><b id="m-in">0</b> / <span id="m-tot">0</span></span></div><div class="track"><div class="fill" id="m-fill" style="width:0"></div></div></div>
+      </div>
+      <div class="viewer" id="viewer">
+        <video id="video" playsinline muted hidden></video>
+        <div class="reticle" id="reticle" hidden><i></i><i></i><i></i><i></i></div>
+        <div class="scanline" id="scanline" hidden></div>
+        <div class="idle" id="idle">
+          <label class="shoot">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/></svg>
+            Scansiona biglietto
+            <input type="file" id="snap" accept="image/*" capture="environment" aria-label="Scatta foto del QR">
+          </label>
+          <p>Si apre la fotocamera: inquadra il QR e scatta. Il controllo è istantaneo.</p>
+        </div>
+      </div>
+      <div class="door-tools">
+        <button class="btn line sm" id="live">Prova scansione continua</button>
+        <button class="btn line sm" id="stoplive" hidden>Ferma fotocamera</button>
+      </div>
+      <form class="manual" id="manual">
+        <input id="code" placeholder="C27-XXXX-01" aria-label="Codice biglietto" autocomplete="off" autocapitalize="characters">
+        <button class="btn" type="submit">Verifica</button>
+      </form>
+      <div><h2 class="sec">Ultimi ingressi</h2><div class="log" id="log"></div></div>
+    </div>
+  </section>
+</main>
+
+<nav class="bottom" role="tablist">
+  <button role="tab" data-tab="lista" aria-selected="true">Lista</button>
+  <button role="tab" data-tab="porta" aria-selected="false">Porta · scanner</button>
+</nav>
+
+<div id="layer"></div>
+
+<script>
+(() => {
+/* ------------------------------------------------------------------ */
+/* Dati festa                                                          */
+/* ------------------------------------------------------------------ */
+const RELEASES = [{ name: "Prima release", price: 30 }, { name: "Seconda release", price: 50 }];
+const ALPH = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // niente 0/O/1/I
+const rnd = (n) => { const a = new Uint32Array(n); crypto.getRandomValues(a); return [...a].map(x => ALPH[x % ALPH.length]).join(""); };
+const newCode = () => "C27-" + rnd(4);
+const ticketId = (code, i) => `${code}-${String(i + 1).padStart(2, "0")}`;
+const codeOf = (tid) => (tid.match(/^C27-[A-Z2-9]{4}/) || [""])[0];
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const fullName = (g) => `${g.firstName || ""} ${g.lastName || ""}`.trim();
+const hhmm = (iso) => { try { return new Date(iso).toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" }); } catch { return ""; } };
+const $ = (s) => document.querySelector(s);
+
+/* ------------------------------------------------------------------ */
+/* Store: database dell'artifact, oppure demo locale                    */
+/* ------------------------------------------------------------------ */
+let bookings = new Map(), checkins = new Map(), store = null, demo = false;
+
+function sampleData() {
+  const now = new Date().toISOString();
+  const mk = (code, ig, release, status, people) => {
+    const r = RELEASES.find(x => x.name === release);
+    return { code, createdAt: now, release, unitPrice: r.price, amount: r.price * people.length,
+      causale: `CAPODANNO27 ${code} ${people[0][1]}`, status, example: true,
+      payer: { instagram: ig, email: "", trn: "" },
+      guests: people.map((p, i) => ({ ticketId: ticketId(code, i), firstName: p[0], lastName: p[1] })) };
+  };
+  return [
+    mk("C27-7KQ4", "giulia.esempio", "Prima release", "paid", [["Giulia", "Esempio"], ["Marco", "Esempio"]]),
+    mk("C27-H3ZP", "lele.demo", "Prima release", "pending_payment", [["Lele", "Demo"]]),
+    mk("C27-W8NE", "sara.prova", "Seconda release", "paid", [["Sara", "Prova"], ["Tommi", "Prova"], ["Bea", "Prova"]]),
+  ];
+}
+
+function demoStore() {
+  let state;
+  try { state = JSON.parse(localStorage.getItem("porta-demo") || "null"); } catch { state = null; }
+  if (!state) state = { bookings: sampleData(), checkins: [] };
+  const subs = { b: [], c: [] };
+  const save = () => { try { localStorage.setItem("porta-demo", JSON.stringify(state)); } catch {} };
+  const emit = () => { save(); subs.b.forEach(f => f(state.bookings)); subs.c.forEach(f => f(state.checkins)); };
+  return {
+    onBookings(f) { subs.b.push(f); f(state.bookings); },
+    onCheckins(f) { subs.c.push(f); f(state.checkins); },
+    async getBooking(code) { return state.bookings.find(b => b.code === code) || null; },
+    async getCheckin(id) { return state.checkins.find(c => c.ticketId === id) || null; },
+    async setBooking(b) { state.bookings = state.bookings.filter(x => x.code !== b.code).concat(b); emit(); },
+    async deleteBooking(code) { state.bookings = state.bookings.filter(x => x.code !== code); emit(); },
+    async setCheckin(c) { state.checkins = state.checkins.filter(x => x.ticketId !== c.ticketId).concat(c); emit(); },
+    async deleteCheckin(id) { state.checkins = state.checkins.filter(x => x.ticketId !== id); emit(); },
+  };
+}
+
+function dbStore(db) {
+  const B = db.collection("bookings"), C = db.collection("checkins");
+  const arr = (snap) => snap.docs.map(d => d.data());
+  return {
+    onBookings(f, err) { B.onSnapshot(s => f(arr(s)), err); },
+    onCheckins(f, err) { C.onSnapshot(s => f(arr(s)), err); },
+    async getBooking(code) { const s = await B.doc(code).get(); return s.exists ? s.data() : null; },
+    async getCheckin(id) { const s = await C.doc(id).get(); return s.exists ? s.data() : null; },
+    setBooking: (b) => B.doc(b.code).set(b),
+    deleteBooking: (code) => B.doc(code).delete(),
+    setCheckin: (c) => C.doc(c.ticketId).set(c),
+    deleteCheckin: (id) => C.doc(id).delete(),
+  };
+}
+
+function useStore(s, isDemo) {
+  store = s; demo = isDemo;
+  const m = $("#mode");
+  m.textContent = isDemo ? "Demo" : "Live";
+  m.className = "mode" + (isDemo ? "" : " live");
+  $("#notice").innerHTML = isDemo
+    ? `<div class="notice"><b>Modalità demo.</b> Questi dati restano solo su questo telefono. Apri la pagina da claude.ai con il tuo account per usare il database condiviso con gli altri organizzatori.</div>`
+    : "";
+  loaded = false;
+  const t = setTimeout(() => { if (!loaded) $("#notice").innerHTML = `<div class="notice"><b>Il database non risponde.</b> Controlla la connessione e riapri la pagina.</div>`; }, 10000);
+  const onErr = () => { $("#notice").innerHTML = `<div class="notice"><b>Non riesco a leggere il database.</b> Solo il proprietario e chi è invitato come Editor può vedere la lista.</div>`; };
+  s.onBookings(list => { loaded = true; clearTimeout(t); bookings = new Map(list.map(b => [b.code, b])); render(); }, onErr);
+  s.onCheckins(list => { checkins = new Map(list.map(c => [c.ticketId, c])); render(); }, onErr);
+}
+let loaded = false;
+
+/* ------------------------------------------------------------------ */
+/* QR                                                                   */
+/* ------------------------------------------------------------------ */
+const qrCache = new Map();
+function qrMatrix(text) {
+  const q = qrcode(0, "M"); q.addData(text); q.make();
+  const n = q.getModuleCount(); const m = [];
+  for (let r = 0; r < n; r++) { m.push([]); for (let c = 0; c < n; c++) m[r].push(q.isDark(r, c)); }
+  return m;
+}
+function drawQR(ctx, text, x, y, size, color = "#0B0F19") {
+  const m = qrMatrix(text), n = m.length, quiet = 2, cell = size / (n + quiet * 2);
+  ctx.fillStyle = "#fff"; ctx.fillRect(x, y, size, size);
+  ctx.fillStyle = color;
+  for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (m[r][c]) {
+    ctx.fillRect(Math.floor(x + (c + quiet) * cell), Math.floor(y + (r + quiet) * cell), Math.ceil(cell), Math.ceil(cell));
+  }
+}
+function qrDataUrl(text) {
+  if (qrCache.has(text)) return qrCache.get(text);
+  const cv = document.createElement("canvas"); cv.width = cv.height = 300;
+  drawQR(cv.getContext("2d"), text, 0, 0, 300);
+  const u = cv.toDataURL("image/png"); qrCache.set(text, u); return u;
+}
+
+async function ticketPng(b, g) {
+  try { await Promise.all(["400 120px 'Instrument Serif'", "italic 400 120px 'Instrument Serif'", "500 30px 'IBM Plex Mono'", "700 60px 'Plus Jakarta Sans'"].map(f => document.fonts.load(f))); } catch {}
+  const W = 1080, H = 1920, cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+  const x = cv.getContext("2d");
+  // fondo notte con bagliore
+  x.fillStyle = "#0B0F19"; x.fillRect(0, 0, W, H);
+  const gr = x.createRadialGradient(W / 2, 200, 40, W / 2, 200, 1100); gr.addColorStop(0, "rgba(226,184,102,.35)"); gr.addColorStop(1, "rgba(11,15,25,0)");
+  x.fillStyle = gr; x.fillRect(0, 0, W, H);
+  // coriandoli d'oro
+  let seed = [...g.ticketId].reduce((a, c) => a * 31 + c.charCodeAt(0), 7) >>> 0;
+  const rr = () => (seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296;
+  for (let i = 0; i < 90; i++) { x.fillStyle = `rgba(236,210,155,${0.15 + rr() * 0.5})`; x.beginPath(); x.arc(rr() * W, rr() * 560, 1.5 + rr() * 4, 0, 7); x.fill(); }
+  // carta del biglietto
+  const L = 90, T = 300, CW = W - 180, CH = 1440, R = 44;
+  x.fillStyle = "#f4e6c4";
+  x.beginPath(); x.roundRect(L, T, CW, CH, R); x.fill();
+  // perforazione
+  const py = T + 560; x.fillStyle = "#0B0F19";
+  x.beginPath(); x.arc(L, py, 34, 0, 7); x.arc(L + CW, py, 34, 0, 7); x.fill();
+  x.strokeStyle = "rgba(11,15,25,.3)"; x.setLineDash([16, 14]); x.lineWidth = 4; x.beginPath(); x.moveTo(L + 50, py); x.lineTo(L + CW - 50, py); x.stroke(); x.setLineDash([]);
+  x.fillStyle = "rgba(11,15,25,.55)"; x.font = "500 26px 'IBM Plex Mono', monospace"; x.textBaseline = "alphabetic";
+  x.fillText("LISTA NOMINALE · 18+", L + 60, T + 80);
+  x.textAlign = "right"; x.fillText(g.ticketId, L + CW - 60, T + 80); x.textAlign = "left";
+  x.fillStyle = "#0B0F19"; x.font = "400 150px 'Instrument Serif', Georgia, serif"; x.fillText("Capodanno", L + 56, T + 250);
+  x.fillStyle = "#8f6620"; x.font = "italic 400 150px 'Instrument Serif', Georgia, serif"; x.fillText("2027", L + 56, T + 380);
+  x.fillStyle = "rgba(11,15,25,.55)"; x.font = "500 24px 'IBM Plex Mono', monospace";
+  x.fillText("DATA", L + 60, T + 460); x.fillText("INGRESSO", L + 420, T + 460);
+  x.fillStyle = "#0B0F19"; x.font = "500 34px 'IBM Plex Mono', monospace";
+  x.fillText("31.12.2026", L + 60, T + 505); x.fillText("dalle 21:00", L + 420, T + 505);
+  // nome
+  x.fillStyle = "#0B0F19"; x.font = "700 64px 'Plus Jakarta Sans', system-ui, sans-serif";
+  let name = fullName(g); while (x.measureText(name).width > CW - 120 && name.length > 4) name = name.slice(0, -2) + "…";
+  x.fillText(name, L + 60, py + 120);
+  x.fillStyle = "rgba(11,15,25,.55)"; x.font = "500 26px 'IBM Plex Mono', monospace";
+  x.fillText(`${b.release.toUpperCase()} · ${b.unitPrice} €`, L + 60, py + 168);
+  // QR
+  const QS = 620; drawQR(x, g.ticketId, (W - QS) / 2, py + 220, QS);
+  x.textAlign = "center"; x.fillStyle = "rgba(11,15,25,.6)"; x.font = "500 24px 'IBM Plex Mono', monospace";
+  x.fillText("VALE UNA SOLA ENTRATA · NON CONDIVIDERLO", W / 2, py + 220 + QS + 56);
+  x.fillStyle = "rgba(236,210,155,.8)"; x.font = "500 26px 'IBM Plex Mono', monospace";
+  x.fillText("MOSTRA QUESTO SCHERMO ALLA PORTA", W / 2, T + CH + 90);
+  return await new Promise(r => cv.toBlob(r, "image/png"));
+}
+
+/* ------------------------------------------------------------------ */
+/* UI: lista                                                            */
+/* ------------------------------------------------------------------ */
+let filter = "all", query = "", open = new Set();
+
+function render() { renderStats(); renderList(); renderDoor(); }
+
+function allTickets() { return [...bookings.values()].flatMap(b => (b.guests || []).map(g => ({ b, g }))); }
+
+function renderStats() {
+  const bs = [...bookings.values()];
+  const people = bs.reduce((n, b) => n + (b.guests || []).length, 0);
+  const paid = bs.filter(b => b.status === "paid");
+  const paidPeople = paid.reduce((n, b) => n + b.guests.length, 0);
+  const cash = paid.reduce((n, b) => n + (Number(b.amount) || 0), 0);
+  $("#stats").innerHTML = [
+    [people, "in lista"], [paidPeople, "pagati"], [cash + "€", "incassati", "gold"], [checkins.size, "dentro"],
+  ].map(([n, l, c]) => `<div><div class="n ${c || ""}">${n}</div><div class="l">${l}</div></div>`).join("");
+}
+
+function renderList() {
+  const q = query.trim().toLowerCase();
+  const items = [...bookings.values()]
+    .filter(b => filter === "all" || b.status === filter)
+    .filter(b => !q || [b.code, b.payer?.instagram, b.payer?.email, ...(b.guests || []).map(fullName)].join(" ").toLowerCase().includes(q))
+    .sort((a, b) => (a.status === b.status ? String(b.createdAt).localeCompare(String(a.createdAt)) : a.status === "pending_payment" ? -1 : 1));
+  const el = $("#list");
+  if (!loaded) { el.innerHTML = `<div class="empty"><p>Carico la lista…</p></div>`; return; }
+  if (!bookings.size) {
+    el.innerHTML = `<div class="empty"><h3>Lista vuota</h3><p>Aggiungi la prima prenotazione con <b>+ Prenotazione</b>, oppure incolla quelle arrivate dal sito.</p></div>`; return;
+  }
+  if (!items.length) { el.innerHTML = `<div class="empty"><p>Nessuna prenotazione trovata.</p></div>`; return; }
+  el.innerHTML = items.map(b => {
+    const isOpen = open.has(b.code), paid = b.status === "paid";
+    const names = (b.guests || []).map(fullName).join(", ");
+    const tix = (b.guests || []).map(g => {
+      const ci = checkins.get(g.ticketId);
+      if (!paid) return `<div class="tk locked">QR bloccato<br>finché il bonifico non è confermato</div>`;
+      return `<div class="tk"><img src="${qrDataUrl(g.ticketId)}" alt="QR di ${esc(fullName(g))}"><div class="nm">${esc(fullName(g))}</div><div class="id">${esc(g.ticketId)}</div>${ci ? `<div class="in">Entrato ${hhmm(ci.at)}</div>` : ""}<button data-act="png" data-code="${b.code}" data-tid="${esc(g.ticketId)}">Salva biglietto</button></div>`;
+    }).join("");
+    return `<article class="bk">
+      <button class="bk-h" data-act="toggle" data-code="${b.code}" aria-expanded="${isOpen}">
+        <div class="bk-who"><div class="bk-names">${esc(names) || "Senza nomi"}</div><div class="bk-meta">${esc(b.code)} · @${esc(b.payer?.instagram || "—")} · ${b.guests?.length || 0} pers.</div></div>
+        <div class="bk-right"><div class="amt">${esc(b.amount)} €</div><span class="pill ${paid ? "paid" : "pending"}">${paid ? "Pagato" : "Attesa bonifico"}</span>${b.example ? `<span class="pill ex">esempio</span>` : ""}</div>
+      </button>
+      ${isOpen ? `<div class="bk-b">
+        <dl class="kv">
+          <dt>Release</dt><dd>${esc(b.release)} · ${esc(b.unitPrice)} € a persona</dd>
+          <dt>Causale</dt><dd class="causale"><code>${esc(b.causale)}</code><button class="btn ghost sm" data-act="copy" data-text="${esc(b.causale)}">Copia</button></dd>
+          ${b.payer?.email ? `<dt>Email</dt><dd>${esc(b.payer.email)}</dd>` : ""}
+          ${b.payer?.trn ? `<dt>TRN</dt><dd class="mono">${esc(b.payer.trn)}</dd>` : ""}
+          <dt>Creata</dt><dd>${esc(new Date(b.createdAt).toLocaleString("it-IT", { dateStyle: "short", timeStyle: "short" }))}</dd>
+        </dl>
+        <div class="row-actions">
+          ${paid ? `<button class="btn line sm" data-act="unpay" data-code="${b.code}">Segna come non pagato</button>`
+                 : `<button class="btn ok" data-act="pay" data-code="${b.code}">✓ Bonifico ricevuto</button>`}
+          <button class="btn ghost sm" data-act="edit" data-code="${b.code}">Modifica</button>
+          <button class="btn ghost sm" data-act="del" data-code="${b.code}">Elimina</button>
+        </div>
+        <div class="tix">${tix}</div>
+      </div>` : ""}
+    </article>`;
+  }).join("");
+}
+
+$("#list").addEventListener("click", async (e) => {
+  const t = e.target.closest("[data-act]"); if (!t) return;
+  const b = bookings.get(t.dataset.code);
+  switch (t.dataset.act) {
+    case "toggle": open.has(t.dataset.code) ? open.delete(t.dataset.code) : open.add(t.dataset.code); renderList(); break;
+    case "pay": await save({ ...b, status: "paid", paidAt: new Date().toISOString() }, "Confermato: i QR sono pronti"); break;
+    case "unpay": await save({ ...b, status: "pending_payment", paidAt: null }, "Rimesso in attesa"); break;
+    case "edit": openForm(b); break;
+    case "del":
+      if (t.dataset.confirm) { try { await store.deleteBooking(b.code); toast("Prenotazione eliminata"); } catch { toast("Non sono riuscito a eliminarla"); } }
+      else { t.dataset.confirm = "1"; t.textContent = "Tocca di nuovo per eliminare"; t.style.color = "var(--bad)"; }
+      break;
+    case "copy": copy(t.dataset.text); break;
+    case "png": {
+      const g = b.guests.find(x => x.ticketId === t.dataset.tid);
+      t.textContent = "Preparo…";
+      const blob = await ticketPng(b, g);
+      t.textContent = "Salva biglietto";
+      const fn = `biglietto-${g.ticketId}-${(g.firstName || "").toLowerCase()}.png`;
+      const dl = await (window.claude?.use?.("downloads") ?? Promise.resolve(null)).catch(() => null);
+      if (dl) { try { await dl.save({ filename: fn, data: blob }); toast("Biglietto salvato: mandalo in DM"); return; } catch (err) { if (err?.code === "declined") return; } }
+      showImage(URL.createObjectURL(blob), fullName(g));
+    }
+  }
+});
+
+async function save(b, msg) {
+  try { await store.setBooking(b); if (msg) toast(msg); return true; }
+  catch (err) { toast("Salvataggio non riuscito. Riprova."); return false; }
+}
+
+function copy(text) {
+  navigator.clipboard?.writeText(text).then(() => toast("Copiato"), () => toast(text));
+}
+
+let toastT;
+function toast(msg) {
+  clearTimeout(toastT);
+  let el = $(".toast"); if (!el) { el = document.createElement("div"); el.className = "toast"; el.setAttribute("role", "status"); document.body.append(el); }
+  el.textContent = msg; el.hidden = false; toastT = setTimeout(() => el.hidden = true, 2600);
+}
+
+function showImage(url, name) {
+  $("#layer").innerHTML = `<div class="sheet-bg" data-close><div class="sheet" style="text-align:center"><div class="eyebrow">Biglietto</div><h2>${esc(name)}</h2><img src="${url}" alt="Biglietto di ${esc(name)}" style="max-height:60vh;border-radius:16px"><p style="color:var(--muted);font-size:13px">Tieni premuto sull'immagine per salvarla, poi mandala in DM.</p><div class="foot"><button class="btn" data-close>Chiudi</button></div></div></div>`;
+}
+$("#layer").addEventListener("click", (e) => { if (e.target.matches("[data-close]")) $("#layer").innerHTML = ""; });
+
+/* form prenotazione */
+function openForm(b) {
+  const editing = !!b;
+  const rel = b?.release || RELEASES[0].name;
+  const names = (b?.guests || []).map(fullName).join("\n");
+  $("#layer").innerHTML = `<div class="sheet-bg" data-close><form class="sheet" id="f">
+    <div class="eyebrow">${editing ? esc(b.code) : "Nuova prenotazione"}</div>
+    <h2>${editing ? "Modifica" : "Chi viene?"}</h2>
+    <div class="fld"><label for="f-names">Nomi in lista</label><textarea id="f-names" placeholder="Giulia Rossi&#10;Marco Bianchi" required>${esc(names)}</textarea><small>Uno per riga, nome e cognome. Ogni riga è un biglietto.</small></div>
+    <div class="fld"><label for="f-ig">Instagram di chi paga</label><input id="f-ig" placeholder="nome.utente" value="${esc(b?.payer?.instagram || "")}" autocapitalize="off"></div>
+    <div class="fld"><label>Release</label><div class="seg" id="f-rel">${RELEASES.map(r => `<button type="button" data-r="${r.name}" aria-pressed="${r.name === rel}"><b>${r.price} €</b><span>${r.name}</span></button>`).join("")}</div></div>
+    <div class="fld"><label for="f-trn">Riferimento bonifico (facoltativo)</label><input id="f-trn" value="${esc(b?.payer?.trn || "")}" placeholder="TRN o CRO"></div>
+    <div class="fld"><label for="f-paid"><input type="checkbox" id="f-paid" ${b?.status === "paid" ? "checked" : ""}> Bonifico già ricevuto</label></div>
+    <p class="err" id="f-err"></p>
+    <div class="foot"><button type="button" class="btn line" data-close>Annulla</button><button class="btn" type="submit">${editing ? "Salva" : "Aggiungi"}</button></div>
+  </form></div>`;
+  let release = rel;
+  $("#f-rel").addEventListener("click", (e) => { const t = e.target.closest("[data-r]"); if (!t) return; release = t.dataset.r; $("#f-rel").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === t)); });
+  $("#f").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const lines = $("#f-names").value.split(/\n+/).map(s => s.trim()).filter(Boolean);
+    if (!lines.length) { $("#f-err").textContent = "Scrivi almeno un nome."; return; }
+    if (lines.some(l => l.split(/\s+/).length < 2)) { $("#f-err").textContent = "Serve nome e cognome su ogni riga: si entra solo con la lista nominale."; return; }
+    let code = b?.code; if (!code) { do code = newCode(); while (bookings.has(code)); }
+    const r = RELEASES.find(x => x.name === release);
+    const old = b?.guests || [];
+    const guests = lines.map((l, i) => {
+      const parts = l.split(/\s+/); const firstName = parts.shift(); const lastName = parts.join(" ");
+      const same = old.find(g => fullName(g).toLowerCase() === l.toLowerCase());
+      return { ticketId: same?.ticketId || null, firstName, lastName };
+    });
+    // id stabili: riusa quelli esistenti, numera i nuovi senza collisioni
+    const used = new Set(guests.map(g => g.ticketId).filter(Boolean)); let n = 0;
+    guests.forEach(g => { if (!g.ticketId) { let id; do id = ticketId(code, n++); while (used.has(id)); used.add(id); g.ticketId = id; } });
+    const paid = $("#f-paid").checked;
+    const nb = { ...(b || {}), code, createdAt: b?.createdAt || new Date().toISOString(), release: r.name, unitPrice: r.price,
+      amount: r.price * guests.length, causale: b?.causale || `CAPODANNO27 ${code} ${guests[0].lastName}`,
+      status: paid ? "paid" : "pending_payment", paidAt: paid ? (b?.paidAt || new Date().toISOString()) : null,
+      payer: { ...(b?.payer || {}), instagram: $("#f-ig").value.replace(/^@/, "").trim(), trn: $("#f-trn").value.trim() }, guests, example: false };
+    if (await save(nb, editing ? "Salvato" : `Aggiunta ${code}`)) { $("#layer").innerHTML = ""; open.add(code); renderList(); }
+  });
+}
+$("#add").addEventListener("click", () => openForm(null));
+
+/* incolla JSON dal sito */
+$("#import").addEventListener("click", () => {
+  $("#layer").innerHTML = `<div class="sheet-bg" data-close><form class="sheet" id="imp">
+    <div class="eyebrow">Dal sito</div><h2>Incolla prenotazioni</h2>
+    <div class="fld"><label for="imp-t">JSON della prenotazione</label><textarea id="imp-t" placeholder='{"code":"C27-7KQ4", "guests":[…]}' style="min-height:180px;font-family:var(--mono);font-size:12px"></textarea><small>Una prenotazione o una lista. I codici già presenti vengono aggiornati.</small></div>
+    <p class="err" id="imp-err"></p>
+    <div class="foot"><button type="button" class="btn line" data-close>Annulla</button><button class="btn" type="submit">Importa</button></div>
+  </form></div>`;
+  $("#imp").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    let data; try { data = JSON.parse($("#imp-t").value); } catch { $("#imp-err").textContent = "Il testo non è JSON valido."; return; }
+    const list = (Array.isArray(data) ? data : [data]).filter(b => b && /^C27-[A-Z2-9]{4}$/.test(b.code) && Array.isArray(b.guests));
+    if (!list.length) { $("#imp-err").textContent = "Nessuna prenotazione riconosciuta: serve un code tipo C27-XXXX e la lista guests."; return; }
+    let ok = 0;
+    for (const b of list) {
+      const clean = { code: b.code, createdAt: b.createdAt || new Date().toISOString(), release: String(b.release || RELEASES[0].name),
+        unitPrice: Number(b.unitPrice) || 0, amount: Number(b.amount) || 0, causale: String(b.causale || `CAPODANNO27 ${b.code}`),
+        status: b.status === "paid" ? "paid" : "pending_payment",
+        payer: { instagram: String(b.payer?.instagram || ""), email: String(b.payer?.email || ""), trn: String(b.payer?.trn || "") },
+        guests: b.guests.map((g, i) => ({ ticketId: /^C27-[A-Z2-9]{4}-\d{2}$/.test(g.ticketId) ? g.ticketId : ticketId(b.code, i), firstName: String(g.firstName || ""), lastName: String(g.lastName || "") })) };
+      if (await save(clean)) ok++;
+    }
+    $("#layer").innerHTML = ""; toast(`${ok} prenotazioni importate`);
+  });
+});
+
+/* esporta CSV */
+$("#export").addEventListener("click", async () => {
+  const rows = [["ticketId", "nome", "cognome", "codice", "instagram", "release", "prezzo", "stato", "causale", "entrato_alle"]];
+  allTickets().forEach(({ b, g }) => rows.push([g.ticketId, g.firstName, g.lastName, b.code, b.payer?.instagram, b.release, b.unitPrice, b.status, b.causale, checkins.get(g.ticketId)?.at || ""]));
+  const csv = rows.map(r => r.map(v => `"${String(v ?? "").replace(/"/g, '""')}"`).join(";")).join("\n");
+  const dl = await (window.claude?.use?.("downloads") ?? Promise.resolve(null)).catch(() => null);
+  if (!dl) { copy(csv); toast("CSV copiato negli appunti"); return; }
+  try { await dl.save({ filename: "lista-capodanno-2027.csv", data: "﻿" + csv }); toast("CSV salvato"); } catch (err) { if (err?.code !== "declined") { copy(csv); toast("CSV copiato negli appunti"); } }
+});
+
+$("#q").addEventListener("input", (e) => { query = e.target.value; renderList(); });
+$("#filters").addEventListener("click", (e) => {
+  const t = e.target.closest("[data-f]"); if (!t) return; filter = t.dataset.f;
+  $("#filters").querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c === t)); renderList();
+});
+
+/* ------------------------------------------------------------------ */
+/* UI: porta                                                            */
+/* ------------------------------------------------------------------ */
+let log = [];
+function renderDoor() {
+  const paid = [...bookings.values()].filter(b => b.status === "paid").reduce((n, b) => n + b.guests.length, 0);
+  $("#m-in").textContent = checkins.size; $("#m-tot").textContent = paid;
+  $("#m-fill").style.width = paid ? Math.min(100, checkins.size / paid * 100) + "%" : "0";
+  $("#log").innerHTML = log.slice(0, 12).map(l => `<div><span class="t">${l.t}</span><span>${esc(l.name)}</span><span class="s ${l.kind}">${l.label}</span></div>`).join("")
+    || `<div><span class="t">—</span><span style="color:var(--dim)">Nessuna scansione ancora</span><span></span></div>`;
+}
+
+let busy = false;
+async function validate(raw) {
+  if (busy || !store) return; busy = true;
+  const tid = String(raw || "").trim().toUpperCase();
+  const now = new Date();
+  const verdict = (kind, big, who, sub, extra) => { showVerdict(kind, big, who, sub, extra); log.unshift({ t: hhmm(now.toISOString()), name: who || tid, kind, label: big }); renderDoor(); buzz(kind); };
+  try {
+    const code = codeOf(tid);
+    const b = code && (bookings.get(code) || await store.getBooking(code));
+    const g = b?.guests?.find(x => x.ticketId === tid);
+    if (!g) return verdict("bad", "No", "Biglietto non valido", tid ? `Codice ${tid} non in lista` : "QR non riconosciuto");
+    if (b.status !== "paid") return verdict("bad", "Stop", fullName(g), "Bonifico non ancora confermato");
+    const prev = checkins.get(tid) || await store.getCheckin(tid);
+    if (prev) return verdict("used", "Già dentro", fullName(g), `Entrato alle ${hhmm(prev.at)} · QR già usato`);
+    const ci = { ticketId: tid, code, at: now.toISOString(), name: fullName(g) };
+    await store.setCheckin(ci);
+    verdict("ok", "Entra", fullName(g), `${b.release} · ${tid}`, { undo: tid });
+  } catch {
+    showVerdict("bad", "Errore", "Non riesco a controllare", "Controlla la connessione e riprova");
+  } finally { busy = false; }
+}
+
+function showVerdict(kind, big, who, sub, extra = {}) {
+  $("#layer").innerHTML = `<div class="verdict ${kind}" role="alertdialog" aria-live="assertive">
+    <div class="big">${esc(big)}</div><div class="who">${esc(who)}</div><div class="sub">${esc(sub)}</div>
+    <div class="acts">${extra.undo ? `<button data-undo="${esc(extra.undo)}">Annulla ingresso</button>` : ""}<button class="primary" data-next>Prossimo</button></div></div>`;
+}
+$("#layer").addEventListener("click", async (e) => {
+  if (e.target.matches("[data-next]")) { $("#layer").innerHTML = ""; resumeLive(); }
+  const u = e.target.closest("[data-undo]");
+  if (u) { try { await store.deleteCheckin(u.dataset.undo); log.shift(); renderDoor(); toast("Ingresso annullato"); } catch { toast("Non riuscito"); } $("#layer").innerHTML = ""; resumeLive(); }
+});
+
+let actx;
+function buzz(kind) {
+  try { navigator.vibrate?.(kind === "ok" ? 80 : [200, 80, 200]); } catch {}
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    const o = actx.createOscillator(), g = actx.createGain(); o.connect(g); g.connect(actx.destination);
+    const t = actx.currentTime;
+    if (kind === "ok") { o.frequency.setValueAtTime(880, t); o.frequency.setValueAtTime(1320, t + .09); } else { o.type = "square"; o.frequency.setValueAtTime(180, t); }
+    g.gain.setValueAtTime(.12, t); g.gain.exponentialRampToValueAtTime(.001, t + .35); o.start(t); o.stop(t + .36);
+  } catch {}
+}
+
+/* decodifica da foto */
+async function decodeFile(file) {
+  const img = await createImageBitmap(file).catch(() => null);
+  if (!img) return null;
+  if ("BarcodeDetector" in window) {
+    try { const r = await new BarcodeDetector({ formats: ["qr_code"] }).detect(img); if (r[0]) return r[0].rawValue; } catch {}
+  }
+  for (const max of [1000, 1600, 700]) {
+    const s = Math.min(1, max / Math.max(img.width, img.height));
+    const cv = document.createElement("canvas"); cv.width = Math.round(img.width * s); cv.height = Math.round(img.height * s);
+    const c = cv.getContext("2d", { willReadFrequently: true }); c.drawImage(img, 0, 0, cv.width, cv.height);
+    const d = c.getImageData(0, 0, cv.width, cv.height);
+    const r = jsQR(d.data, d.width, d.height, { inversionAttempts: "attemptBoth" });
+    if (r) return r.data;
+  }
+  return null;
+}
+$("#snap").addEventListener("change", async (e) => {
+  const f = e.target.files[0]; e.target.value = ""; if (!f) return;
+  toast("Leggo il QR…");
+  const txt = await decodeFile(f);
+  if (!txt) { showVerdict("bad", "?", "QR non letto", "Riprova più vicino e con più luce, oppure scrivi il codice"); buzz("bad"); return; }
+  validate(txt);
+});
+$("#manual").addEventListener("submit", (e) => { e.preventDefault(); validate($("#code").value); $("#code").value = ""; });
+
+/* scansione continua (se il telefono la consente) */
+let stream = null, raf = 0, paused = false, lastTxt = "", lastAt = 0;
+$("#live").addEventListener("click", async () => {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });
+  } catch { toast("Fotocamera live non disponibile qui: usa Scansiona biglietto"); $("#live").hidden = true; return; }
+  const v = $("#video"); v.srcObject = stream; await v.play().catch(() => {});
+  v.hidden = false; $("#reticle").hidden = false; $("#scanline").hidden = false; $("#idle").hidden = true;
+  $("#live").hidden = true; $("#stoplive").hidden = false; paused = false; tick();
+});
+$("#stoplive").addEventListener("click", stopLive);
+function stopLive() {
+  cancelAnimationFrame(raf); stream?.getTracks().forEach(t => t.stop()); stream = null;
+  $("#video").hidden = true; $("#reticle").hidden = true; $("#scanline").hidden = true; $("#idle").hidden = false;
+  $("#live").hidden = false; $("#stoplive").hidden = true;
+}
+function resumeLive() { if (stream) { paused = false; tick(); } }
+const cv = document.createElement("canvas"), cx = cv.getContext("2d", { willReadFrequently: true });
+function tick() {
+  if (!stream || paused) return;
+  const v = $("#video");
+  if (v.readyState >= 2) {
+    const s = Math.min(1, 640 / Math.max(v.videoWidth, v.videoHeight));
+    cv.width = v.videoWidth * s; cv.height = v.videoHeight * s; cx.drawImage(v, 0, 0, cv.width, cv.height);
+    const d = cx.getImageData(0, 0, cv.width, cv.height);
+    const r = jsQR(d.data, d.width, d.height, { inversionAttempts: "dontInvert" });
+    if (r && !(r.data === lastTxt && Date.now() - lastAt < 4000)) { lastTxt = r.data; lastAt = Date.now(); paused = true; validate(r.data); return; }
+  }
+  raf = requestAnimationFrame(tick);
+}
+
+/* schede */
+function setTab(name) {
+  document.querySelectorAll("[data-tab]").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === name));
+  $("#v-lista").hidden = name !== "lista"; $("#v-porta").hidden = name !== "porta";
+  if (name !== "porta" && stream) stopLive();
+  try { localStorage.setItem("porta-tab", name); } catch {}
+  if (name === "porta") navigator.wakeLock?.request("screen").catch(() => {});
+}
+document.querySelectorAll("[data-tab]").forEach(b => b.addEventListener("click", () => setTab(b.dataset.tab)));
+try { const t = localStorage.getItem("porta-tab"); if (t) setTab(t); } catch {}
+
+/* avvio */
+render();
+let started = false;
+(async () => {
+  const db = window.claude?.use ? await window.claude.use("db").catch(() => null) : null;
+  if (started && !db) return;
+  started = true;
+  useStore(db ? dbStore(db) : demoStore(), !db);
+})();
+setTimeout(() => { if (!started) { started = true; useStore(demoStore(), true); } }, 11000);
+})();
+</script>
